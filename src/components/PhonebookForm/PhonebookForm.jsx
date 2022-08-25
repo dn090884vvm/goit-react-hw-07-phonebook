@@ -1,40 +1,44 @@
-import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/phonebookActions';
+// import { nanoid } from 'nanoid';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { addContact } from '../../redux/phonebookActions';
 import { WrapperDiv, Button, Form } from './PhonebookForm.styled';
-export default function PhonebookForm() {
-  const dispatch = useDispatch();
+import {
+  useCreateContactMutation,
+  useFetchContactsQuery,
+} from 'redux/contactsSliser';
 
-  const contactsForChecking = useSelector(
-    state => state.phonebookReducer.contacts
-  );
+export default function PhonebookForm() {
+  // const dispatch = useDispatch();
+
+  // const contactsForChecking = useSelector(
+  //   state => state.phonebookReducer.contacts
+  // );
+  const [createContact] = useCreateContactMutation();
+  const { data } = useFetchContactsQuery();
 
   const handleSubmit = e => {
     e.preventDefault();
 
     const target = e.target.elements;
 
-    const isInContacts = contactsForChecking.find(
+    const isInContacts = data.find(
       contact => contact.name.toLowerCase() === target.name.value.toLowerCase()
     );
 
     if (isInContacts) {
       alert(`${target.name.value} is already in contacts`);
-      // target.name.value = '';
-      // target.phone.value = '';
+
       return;
     }
 
     const formDatas = {
-      id: nanoid(),
       name: target.name.value,
       phone: target.phone.value,
     };
 
-    dispatch(addContact(formDatas));
+    createContact(formDatas);
 
-    e.target.elements.name.value = '';
-    e.target.elements.phone.value = '';
+    e.target.reset();
   };
 
   return (

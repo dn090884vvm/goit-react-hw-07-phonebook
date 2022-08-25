@@ -11,6 +11,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { contactsApi } from './contactsSliser';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 // const rootReducer = combineReducers({ phonebookReducer });
 
@@ -28,18 +30,21 @@ const phonebookReducerConfig = {
 
 const rootReducer = combineReducers({
   phonebookReducer: persistReducer(phonebookReducerConfig, phonebookReducer),
+  [contactsApi.reducerPath]: contactsApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+    contactsApi.middleware,
+  ],
   devTools: process.env.NODE_ENV === 'development',
 });
 
@@ -50,5 +55,5 @@ export const persistor = persistStore(store);
 //     phonebookReducer,
 //   },
 // });
-
+setupListeners(store.dispatch);
 export default store;
