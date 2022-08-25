@@ -7,6 +7,7 @@ export const contactsApi = createApi({
   }),
 
   tagTypes: ['myContacts'],
+  // refetchOnReconnect: true,
   endpoints: builder => ({
     fetchContacts: builder.query({
       query: () => `/contacts`,

@@ -8,7 +8,10 @@ import {
 import ContactListItem from './ContactListItem';
 
 export default function ContactList() {
-  const { data, isFetching } = useFetchContactsQuery();
+  const { data, isFetching, refetch } = useFetchContactsQuery({
+    // refetchOnMountOrArgChange: true,
+    // pollingInterval: 5000,
+  });
 
   const filterWord = useSelector(state => state.phonebookReducer.filter);
 
@@ -25,6 +28,9 @@ export default function ContactList() {
 
   return (
     <>
+      <button type="button" onClick={refetch}>
+        Refresh contacts
+      </button>
       {isFetching && <div> Loading... </div>}
       <List>
         {data &&
