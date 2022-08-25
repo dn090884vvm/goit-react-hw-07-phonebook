@@ -1,6 +1,3 @@
-// import { nanoid } from 'nanoid';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { addContact } from '../../redux/phonebookActions';
 import { WrapperDiv, Button, Form } from './PhonebookForm.styled';
 import {
   useCreateContactMutation,
@@ -8,11 +5,6 @@ import {
 } from 'redux/contactsSliser';
 
 export default function PhonebookForm() {
-  // const dispatch = useDispatch();
-
-  // const contactsForChecking = useSelector(
-  //   state => state.phonebookReducer.contacts
-  // );
   const [createContact] = useCreateContactMutation();
   const { data } = useFetchContactsQuery();
 

@@ -5,13 +5,12 @@ export const contactsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://630775393a2114bac762f4d0.mockapi.io/api/v1',
   }),
-  //   keepUnusedDataFor: 1,
+
   tagTypes: ['myContacts'],
   endpoints: builder => ({
     fetchContacts: builder.query({
       query: () => `/contacts`,
       providesTags: ['myContacts'],
-      keepUnusedDataFor: 5,
     }),
     createContact: builder.mutation({
       query: newContact => ({

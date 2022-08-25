@@ -14,8 +14,6 @@ import storage from 'redux-persist/lib/storage';
 import { contactsApi } from './contactsSliser';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
-// const rootReducer = combineReducers({ phonebookReducer });
-
 const persistConfig = {
   key: 'root',
   storage: storage,
@@ -50,10 +48,5 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// const store = configureStore({
-//   reducer: {
-//     phonebookReducer,
-//   },
-// });
 setupListeners(store.dispatch);
 export default store;
