@@ -8,16 +8,14 @@ import {
 import ContactListItem from './ContactListItem';
 
 export default function ContactList() {
-  const { data, isFetching, refetch } = useFetchContactsQuery({
-    // refetchOnMountOrArgChange: true,
-    // pollingInterval: 5000,
-  });
+  const { data, isFetching, refetch } = useFetchContactsQuery({});
 
   const filterWord = useSelector(state => state.phonebookReducer.filter);
 
   const contactsfromAPI = data;
 
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+
   const getfilteredContacts = () => {
     const normalFilter = filterWord.toLowerCase();
     const checkedContacts = contactsfromAPI.filter(contact =>
